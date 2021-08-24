@@ -2,11 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const ShortURL = require("./models/shortURL.js");
 const port = 5000 || process.env.PORT;
+const shortid = require("shortid");
 
-mongoose.connect("mongodb://localhost:27017/urlShortner", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://gaurang:gbhatt@cluster0.d00rq.gcp.mongodb.net/urlShortnerNodeJS?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
@@ -18,6 +22,7 @@ app.get("/", async (req, res) => {
 app.post("/shorturls", async (req, res) => {
   await ShortURL.create({
     full: req.body.full_URL,
+    short: shortid.generate(),
   });
 
   res.redirect("/");
