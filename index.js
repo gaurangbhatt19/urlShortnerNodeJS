@@ -5,7 +5,7 @@ const port = 5000 || process.env.PORT;
 const shortid = require("shortid");
 
 mongoose.connect(
-  "mongodb+srv://gaurang:gbhatt@cluster0.d00rq.gcp.mongodb.net/urlShortnerNodeJS?retryWrites=true&w=majority",
+  "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -37,7 +37,6 @@ app.get("/:shorturlid", async (req, res) => {
 
   shorturlid.clicks++;
   shorturlid.save();
-
   res.redirect(shorturlid.full);
 });
 
